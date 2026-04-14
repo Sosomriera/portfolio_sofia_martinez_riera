@@ -1,0 +1,2415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sofía Martínez Riera· Diseño & Comunicación Digital</title>
+
+  <!-- ============================================================
+       FUENTE: Montserrat (Google Fonts)
+       Para cambiar la fuente, reemplazá el link de abajo y
+       actualizá --font-main en :root
+  ============================================================ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+
+    /* ============================================================
+       VARIABLES GLOBALES
+       Editá estos valores para cambiar la identidad visual completa
+    ============================================================ */
+    :root {
+      --accent: #cbdeff;        /* Celeste suave solicitado */
+      --accent-dark: #a5c4f5;   /* Versión para estados hover */
+      --dark: #232323;          /* Negro suave solicitado */
+      --mid: #666666;           /* Gris para textos secundarios */
+      --light: #f4f8ff;         /* Fondo azulado muy claro para armonizar */
+      --white: #FFFFFF;
+
+      --font-main: 'Montserrat', sans-serif;
+
+      --radius: 0px;            /* Cambiar a 8px para bordes redondeados globales */
+      --transition: 0.3s ease;
+
+      /* Espaciado de secciones */
+      --section-padding: 5rem 4rem;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: var(--white);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ============================================================
+       UTILIDADES REUTILIZABLES
+    ============================================================ */
+
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--dark);
+      margin-bottom: 0.8rem;
+    }
+
+    .divider {
+      width: 40px;
+      height: 2px;
+      background: var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      background: var(--dark);
+      color: var(--white);
+      font-family: var(--font-main);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .btn-primary:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      color: var(--dark);
+    }
+
+    .btn-outline {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      border: 1.5px solid var(--dark);
+      color: var(--dark);
+      font-family: var(--font-main);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all var(--transition);
+      margin-left: 1rem;
+    }
+    .btn-outline:hover {
+      background: var(--dark);
+      color: var(--white);
+    }
+
+    .btn-accent {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      background: var(--accent);
+      color: var(--dark);
+      font-family: var(--font-main);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: opacity var(--transition), transform var(--transition);
+    }
+    .btn-accent:hover {
+      opacity: 0.85;
+      transform: translateY(-2px);
+    }
+
+    /* Animación de entrada */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    /* ============================================================
+       NAVEGACIÓN
+    ============================================================ */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+      transition: box-shadow var(--transition);
+    }
+    .nav.scrolled {
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-logo {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--dark);
+    }
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--dark);
+      transition: all var(--transition);
+    }
+
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 60px);
+      align-items: center;
+      padding: 4rem 4rem;
+      gap: 4rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .hero-h1 {
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      color: var(--dark);
+    }
+    .hero-h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-p {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: var(--mid);
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 580px;
+    }
+
+   .hero-frame {
+  width: auto;
+  height: auto;
+  background: transparent;
+  position: relative;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+    /*
+      FOTO DE PERFIL:
+      Reemplazá el div.hero-avatar y los párrafos debajo por:
+      <img src="tu-foto.jpg" alt="Tu nombre"
+           style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
+    */
+   .hero-avatar {
+  width: 340px;
+  height: 340px;
+  background: transparent;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  animation: morph 8s ease-in-out infinite;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+   .hero-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+   @keyframes morph {
+  0%   { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50%  { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+}
+
+    .hero-name {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dark);
+      position: relative;
+      z-index: 1;
+    }
+    .hero-role {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-border-deco {
+      position: absolute;
+      bottom: -18px;
+      right: -18px;
+      width: 260px;
+      height: 260px;
+      border: 2px solid var(--accent);
+      z-index: -1;
+    }
+
+    .hero-dots {
+      position: absolute;
+      top: -20px;
+      left: -28px;
+      width: 110px;
+      height: 110px;
+      background-image: radial-gradient(circle, var(--accent) 1.2px, transparent 1.2px);
+      background-size: 14px 14px;
+      opacity: 0.35;
+      z-index: -1;
+    }
+
+    .hero-bar {
+  display: none;
+}
+
+
+    /* ============================================================
+       SOBRE MÍ
+    ============================================================ */
+    .about {
+      padding: var(--section-padding);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-text p {
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: var(--mid);
+      margin-bottom: 1rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem;
+      margin-top: 1.8rem;
+    }
+
+    .skill-tag {
+      padding: 0.65rem 1rem;
+      border: 0.5px solid rgba(0, 0, 0, 0.15);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mid);
+      transition: all var(--transition);
+      cursor: default;
+    }
+    .skill-tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+   .stats-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-frame {
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-shape {
+  width: 340px;
+  height: 340px;
+  background: transparent;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  overflow: hidden;
+  animation: morph 8s ease-in-out infinite;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.logo-shape img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.logo-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  width: 100%;
+}
+
+.logo-card img {
+  width: 100%;
+  max-width: none;
+  height: auto;
+  object-fit: contain;
+}
+    .stat-card {
+      padding: 1.5rem 1.2rem;
+      background: var(--light);
+      text-align: center;
+    }
+    .stat-card.dark {
+      background: var(--dark);
+    }
+    .stat-num {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: 0.4rem;
+    }
+
+
+    /* ============================================================
+       PORTFOLIO
+    ============================================================ */
+    .portfolio {
+      padding: var(--section-padding);
+      background: var(--light);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .project-card {
+      background: var(--white);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Premio UP */
+    .award-wrapper {
+      position: relative;
+      margin-top: 1.2rem;
+    }
+    .award-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: var(--accent);
+      color: var(--mid);
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      pointer-events: none;
+    }
+    .award-badge strong {
+      color: #7a1a2e;
+    }
+
+    .project-img {
+      height: 210px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: transparent;
+}
+
+.logo-card img {
+  width: 100%;
+max-width: 320px;
+  height: auto;
+  object-fit: contain;
+}
+
+    /*
+      IMAGEN DE PROYECTO:
+      Reemplazá .project-img-placeholder por:
+      <img src="img/proyecto.jpg" alt="Nombre" style="width:100%;height:100%;object-fit:cover;" />
+    */
+    .project-img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .bg-sand    { background: #EAE4D8; color: #8a7d6a; }
+    .bg-slate   { background: #D0DAE8; color: #5a6a7a; }
+    .bg-rose    { background: #EAD0D8; color: #8a5a6a; }
+    .bg-sage    { background: #D4E8D0; color: #5a7a5a; }
+    .bg-lavend  { background: #DED0EA; color: #7a5a8a; }
+    .bg-clay    { background: #E8D8D0; color: #8a6a5a; }
+
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(17, 17, 17, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .project-card:hover .project-overlay {
+      opacity: 1;
+    }
+    .overlay-btn {
+      padding: 0.6rem 1.4rem;
+      border: 1px solid var(--white);
+      color: var(--white);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: background var(--transition);
+    }
+    .overlay-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .project-info {
+      padding: 1.2rem 1.4rem;
+    }
+    .project-cat {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+    .project-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    .project-desc {
+      font-size: 0.8rem;
+      color: var(--mid);
+      line-height: 1.65;
+    }
+
+
+    /* ============================================================
+       MODAL DE PROYECTO CON SLIDER
+    ============================================================ */
+    .project-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 17, 17, 0.88);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      backdrop-filter: blur(6px);
+    }
+    .project-modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .project-modal {
+      background: var(--white);
+      max-width: 820px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(30px);
+      transition: transform 0.35s ease;
+    }
+    .project-modal-overlay.open .project-modal {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 36px;
+      height: 36px;
+      background: var(--dark);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background var(--transition);
+    }
+    .modal-close:hover {
+      background: var(--accent);
+      color: var(--dark);
+    }
+
+    /* Slider */
+    .modal-slider {
+      position: relative;
+      width: 100%;
+      height: 420px;
+      overflow: hidden;
+      background: #1a1a1a;
+    }
+    .slider-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .slider-slide {
+      min-width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slider-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition);
+      z-index: 5;
+    }
+    .slider-btn:hover { background: var(--accent); color: var(--dark); border-color: var(--accent); }
+    .slider-btn.prev { left: 1rem; }
+    .slider-btn.next { right: 1rem; }
+
+    .slider-dots {
+      position: absolute;
+      bottom: 0.8rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+    .slider-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+    .slider-dot.active { background: var(--accent); }
+
+    .slider-counter {
+      position: absolute;
+      top: 0.8rem;
+      left: 1rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.5);
+      font-family: var(--font-main);
+    }
+
+    /* Modal content */
+    .modal-body {
+      padding: 2rem 2.5rem 2.5rem;
+    }
+    .modal-cat {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+    .modal-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+    }
+    .modal-description {
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--mid);
+      margin-bottom: 1.5rem;
+    }
+    .modal-rights {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: #aaa;
+      border-top: 0.5px solid rgba(0,0,0,0.1);
+      padding-top: 1rem;
+      font-style: italic;
+    }
+
+    .modal-proto {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.2rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--dark);
+      color: var(--white);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .modal-proto:hover {
+      background: var(--accent);
+      color: var(--dark);
+      transform: translateY(-2px);
+    }
+
+
+    /* ============================================================
+       PROYECTO DESTACADO
+    ============================================================ */
+    .featured {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      min-height: 300px;
+      transition: opacity var(--transition);
+    }
+    .featured:hover {
+      opacity: 0.93;
+    }
+
+    .featured-visual {
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+    }
+
+    .featured-mockup {
+      width: 260px;
+      height: 230px;
+      border: 0.5px solid rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .mock-bar  { height: 8px; background: var(--accent); }
+    .mock-line { height: 5px; background: rgba(255, 255, 255, 0.12); }
+    .mock-mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: auto;
+    }
+    .mock-cell { height: 38px; background: rgba(255, 255, 255, 0.06); }
+    .mock-cell.accent { background: rgba(200, 169, 110, 0.2); }
+
+    .featured-content {
+      padding: 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .featured-badge {
+      display: inline-block;
+      padding: 0.3rem 0.9rem;
+      background: var(--accent);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+      width: fit-content;
+    }
+
+    .featured-title {
+      font-size: 1.9rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+
+    .featured-desc {
+      font-size: 0.88rem;
+      line-height: 1.85;
+      color: var(--mid);
+      margin-bottom: 2rem;
+    }
+
+
+    /* ============================================================
+       SERVICIOS
+    ============================================================ */
+    .services {
+      padding: var(--section-padding);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .service-card {
+      padding: 2rem 1.8rem;
+      border: 0.5px solid rgba(0, 0, 0, 0.1);
+      transition: all var(--transition);
+      cursor: default;
+    }
+    .service-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-5px);
+    }
+
+    .service-icon {
+      width: 46px;
+      height: 46px;
+      background: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 1.3rem;
+      color: var(--accent);
+      transition: background var(--transition);
+    }
+    .service-card:hover .service-icon {
+      background: var(--accent);
+      color: var(--dark);
+    }
+
+    .service-name {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 0.6rem;
+    }
+
+    .service-desc {
+      font-size: 0.8rem;
+      line-height: 1.75;
+      color: var(--mid);
+    }
+
+
+    /* ============================================================
+       CONTACTO
+    ============================================================ */
+    .contact {
+      padding: var(--section-padding);
+      background: var(--dark);
+    }
+    .contact .section-title {
+      color: var(--white);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+      margin-top: 2rem;
+    }
+
+    .contact-info p {
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: rgba(255, 255, 255, 0.55);
+      margin-bottom: 2rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .social-links span.social-link:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.65);
+}
+.social-links span.social-link {
+  text-transform: none;
+  cursor: default;
+}
+    .social-link {
+      padding: 0.5rem 1.1rem;
+      border: 0.5px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.65);
+      transition: all var(--transition);
+    }
+    .social-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-field label {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .form-field input,
+    .form-field textarea {
+      background: transparent;
+      border: 0.5px solid rgba(255, 255, 255, 0.18);
+      border-radius: 0;
+      padding: 0.85rem 1rem;
+      color: var(--white);
+      font-family: var(--font-main);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color var(--transition);
+      width: 100%;
+    }
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-color: var(--accent);
+    }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    .form-field textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+
+    .form-success {
+      display: none;
+      padding: 1rem;
+      background: rgba(200, 169, 110, 0.15);
+      border: 0.5px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.82rem;
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      padding: 1.6rem 4rem;
+      border-top: 0.5px solid rgba(0, 0, 0, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      color: var(--mid);
+      letter-spacing: 0.06em;
+    }
+    .footer-accent {
+      color: var(--accent);
+    }
+
+
+    /* ============================================================
+       RESPONSIVE — MOBILE (max-width: 768px)
+    ============================================================ */
+    @media (max-width: 768px) {
+
+  :root {
+    --section-padding: 3.5rem 1.5rem;
+  }
+
+  .nav {
+    padding: 1rem 1.5rem;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+  .nav-toggle {
+    display: flex;
+  }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    margin-top: 1rem;
+    border-top: 0.5px solid rgba(0, 0, 0, 0.08);
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+  }
+  .nav-links.open {
+    display: flex;
+  }
+  .nav-links li a {
+    display: block;
+    padding: 0.6rem 0;
+    font-size: 0.75rem;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+  .hero-text { order: 2; }
+  .hero-visual {
+    order: 1;
+    height: auto;
+    min-height: 0;
+  }
+  .hero-frame {
+    width: auto;
+    height: auto;
+  }
+  .hero-avatar {
+  width: 220px;
+  height: 220px;
+}
+  .hero-p { margin-left: auto; margin-right: auto; }
+  .hero-ctas { justify-content: center; }
+  .btn-outline { margin-left: 0; }
+
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .featured { grid-template-columns: 1fr; }
+  .featured-visual { min-height: 220px; }
+  .featured-content { padding: 2.5rem 1.5rem; }
+  .services-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+
+  .footer {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+    padding: 1.5rem;
+  }
+  .logo-shape {
+  width: 220px;
+  height: 220px;
+}
+}
+
+    /* Tablet */
+    @media (max-width: 1024px) and (min-width: 769px) {
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+      .services-grid  { grid-template-columns: repeat(2, 1fr); }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       NAVEGACIÓN
+       Cambiá el logo y los links según tus secciones
+  ============================================================ -->
+  <nav class="nav" id="navbar">
+    <div class="nav-logo">Sofía <span>·</span> Diseño</div>
+
+    <div class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#sobre">Sobre mí</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- ============================================================
+       HERO — INICIO
+       Editá: frase principal, descripción, iniciales del avatar
+  ============================================================ -->
+  <section class="hero" id="inicio">
+
+    <div class="hero-text reveal">
+      <span class="hero-eyebrow">Comunicación Digital · Diseño Gráfico y Web</span>
+
+      <!-- Título principal -->
+      <h1 class="hero-h1">
+        El diseño es<br>
+        <em>expresión</em><br>
+        
+      </h1>
+
+      <!-- Frase de valor profesional -->
+      <p class="hero-p">
+        Creo identidades visuales, piezas digitales y experiencias que conectan
+        marcas con personas de manera auténtica.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#portfolio" class="btn-primary">Ver portfolio</a>
+        <a href="#sobre" class="btn-outline">Sobre mí</a>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal">
+      <div class="hero-dots"></div>
+
+      <div class="hero-frame">
+        <div class="hero-bar"></div>
+
+        <div class="hero-avatar">
+          <img src="imagenes/perfil.jpeg" alt="Sofía Martínez Riera">
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 1.5rem;">
+        <p class="hero-name">Sofía Martínez Riera</p>
+        <p class="hero-role">Diseñadora · Comunicadora</p>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+       SOBRE MÍ
+       Editá: texto biográfico, habilidades, estadísticas
+  ============================================================ -->
+  <section class="about" id="sobre">
+
+    <div class="about-grid">
+
+      <div class="about-text reveal">
+        <span class="section-label">Sobre mí</span>
+        <h2 class="section-title">Donde la idea 
+         encuentra su forma.</h2>
+        <div class="divider"></div>
+
+        <!-- Editá tu descripción profesional aquí -->
+        <p>
+          Soy estudiante de Comunicación Digital y actualmente curso mi tercer año. 
+          Mi formación integra publicidad, relaciones públicas, diseño gráfico y web, 
+          y marketing digital, lo que me permite abordar proyectos desde una mirada estratégica y creativa.
+        </p>
+
+        <!-- HABILIDADES — agregá o quitá .skill-tag según necesites -->
+        <div class="skills-grid">
+          <div class="skill-tag">Diseño Gráfico</div>
+          <div class="skill-tag">Branding</div>
+          <div class="skill-tag">Diseño Web</div>
+          <div class="skill-tag">Redes Sociales</div>
+          <div class="skill-tag">UX / UI Básico</div>
+        </div>
+      </div>
+
+      <!-- ESTADÍSTICAS — editá números y etiquetas -->
+      <div class="stats-grid reveal">
+  <div class="logo-frame">
+    <div class="logo-shape">
+      <img src="imagenes/logo.png" alt="Logo Sofía Martínez Riera">
+    </div>
+  </div>
+</div>
+  </section>
+
+
+  <!-- ============================================================
+       PORTFOLIO / PROYECTOS
+       Para agregar proyectos: copiá un .project-card y editalo.
+       Para imágenes reales: reemplazá .project-img-placeholder por <img>.
+  ============================================================ -->
+  <section class="portfolio" id="portfolio">
+
+    <span class="section-label">Portfolio</span>
+    <h2 class="section-title">Proyectos seleccionados</h2>
+    <div class="divider"></div>
+
+    <div class="portfolio-grid">
+
+      <!-- PROYECTO 1 — Short n' Sweet -->
+      <div class="project-card reveal" onclick="openProjectModal('shortnsweet')">
+        <div class="project-img">
+          <img src="imagenes/shortnsweet/logo_stns.png" alt="Short n' Sweet" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Diseño Editorial & Packaging</p>
+          <p class="project-name">Short n' Sweet</p>
+          <p class="project-desc">Diseño de CD, sobre, caja contenedora, flyer y afiche tipográfico para artista musical. Proyecto educativo.</p>
+        </div>
+      </div>
+
+      <!-- PROYECTO 2 — Folkmore Department -->
+      <div class="award-wrapper">
+        <div class="award-badge">2º Premio UP · Proyectos Pedagógicos Digitales <strong>2024</strong></div>
+        <div class="project-card reveal" onclick="openProjectModal('folkmore')">
+        <div class="project-img">
+          <img src="imagenes/folkmore/folkmore.png" alt="Folkmore Department" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Diseño Web · UX/UI</p>
+          <p class="project-name">Folkmore Department</p>
+          <p class="project-desc">Sitio web dedicado al análisis profundo de Folklore, Evermore y The Tortured Poets Department de Taylor Swift.</p>
+        </div>
+      </div>
+      </div><!-- /award-wrapper folkmore -->
+
+      <!-- PROYECTO 3 — El Rincón de las Letras -->
+      <div class="project-card reveal" onclick="openProjectModal('rincon')">
+        <div class="project-img">
+          <img src="imagenes/el_rincon/rincon.png" alt="El Rincón de las Letras" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Diseño Web · UX/UI</p>
+          <p class="project-name">El Rincón de las Letras</p>
+          <p class="project-desc">Sitio web dedicado al amor por la lectura: recomendaciones, clásicos y reflexiones para lectores apasionados.</p>
+        </div>
+      </div>
+
+      <!-- PROYECTO 4 — Vértigo Cromático -->
+      <div class="project-card reveal" onclick="openProjectModal('vertigo')">
+        <div class="project-img">
+          <img src="imagenes/vertigo/vertigo.png" alt="Vértigo Cromático" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Diseño Web · HTML / CSS / PHP</p>
+          <p class="project-name">Vértigo Cromático</p>
+          <p class="project-desc">Sitio web dedicado al expresionismo: historia, artistas, obras y la fuerza emocional que atraviesa el movimiento.</p>
+        </div>
+      </div>
+
+      <!-- PROYECTO 5 — Medialunas Calentitas -->
+      <div class="award-wrapper">
+        <div class="award-badge">2º Premio UP · Proyectos Pedagógicos Digitales <strong>2025</strong></div>
+        <div class="project-card reveal" onclick="openProjectModal('medialunas')">
+        <div class="project-img">
+          <img src="imagenes/medialunas/ml1.png" alt="Medialunas Calentitas" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Branding · Rediseño No Oficial</p>
+          <p class="project-name">Medialunas Calentitas</p>
+          <p class="project-desc">Propuesta de rediseño de manual de marca y sitio web. Proyecto académico, no oficial.</p>
+        </div>
+      </div>
+      </div><!-- /award-wrapper medialunas -->
+      <div class="project-card reveal" onclick="openProjectModal('booking')">
+        <div class="project-img">
+          <img src="imagenes/booking/booking1.png" alt="Booking Rediseño" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">UX/UI · Rediseño No Oficial</p>
+          <p class="project-name">Booking · Rediseño</p>
+          <p class="project-desc">Rediseño de la app mobile de Booking: análisis, entrevistas con usuarios, prototipado y testing en Figma. Proyecto grupal.</p>
+        </div>
+      </div>
+
+      <!-- PROYECTO 7 — Cheetos x Hora de Aventura -->
+      <div class="project-card reveal" onclick="openProjectModal('cheetos')">
+        <div class="project-img">
+          <img src="imagenes/cheetos/cheetos.png" alt="Cheetos x Hora de Aventura" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Packaging · Rediseño No Oficial</p>
+          <p class="project-name">Cheetos × Hora de Aventura</p>
+          <p class="project-desc">Diseño de packaging para Cheetos en colaboración con Hora de Aventura. Proyecto académico, no oficial.</p>
+        </div>
+      </div>
+
+      <!-- PROYECTO 8 — Vivienne Westwood -->
+      <div class="project-card reveal" onclick="openProjectModal('westwood')">
+        <div class="project-img">
+          <img src="imagenes/westwood/westwood.png" alt="Vivienne Westwood" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Campaña · Diseño No Oficial</p>
+          <p class="project-name">Vivienne Westwood · Campaña de Temporada</p>
+          <p class="project-desc">Campaña de lanzamiento creativa y expresiva de temporada para Vivienne Westwood. Proyecto académico, no oficial.</p>
+        </div>
+      </div>
+
+      <!-- PROYECTO 9 — Café Pistacho -->
+      <div class="project-card reveal" onclick="openProjectModal('pistacho')">
+        <div class="project-img">
+          <img src="imagenes/pistacho/pistacho1.png" alt="Café Pistacho" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Branding · Identidad Visual</p>
+          <p class="project-name">Café Pistacho</p>
+          <p class="project-desc">Diseño de identidad visual para un café ficticio. Composiciones propias con vectores de terceros. Proyecto académico.</p>
+        </div>
+      </div>
+
+      <!-- PROYECTO 10 — Fasta · Libritos de Insumos -->
+      <div class="project-card reveal" onclick="openProjectModal('amistad')">
+        <div class="project-img">
+          <img src="imagenes/amistad/amistad.png" alt="Fasta · Libritos de Insumos" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Diseño Editorial · Fasta</p>
+          <p class="project-name">Fasta · Libritos de Insumos</p>
+          <p class="project-desc">Diseño de 5 versiones de un librito de insumos para una actividad jurisdiccional de jóvenes, cada una representando una virtud distinta.</p>
+        </div>
+      </div>
+
+      <!-- PROYECTO 11 — Fasta · Heredario -->
+      <div class="project-card reveal" onclick="openProjectModal('heredario')">
+        <div class="project-img">
+          <img src="imagenes/heredario/heredario.png" alt="Heredario · Fasta" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Diseño Editorial · Fasta</p>
+          <p class="project-name">Heredario · Campamento Regional</p>
+          <p class="project-desc">Librito interactivo para campamento regional de jóvenes Herederas: soporte formativo, espiritual y devocionario con oraciones seleccionadas.</p>
+        </div>
+      </div>
+
+      <!-- PROYECTO 12 — Fasta · Ruca Boisdron -->
+      <div class="project-card reveal" onclick="openProjectModal('boisdron')">
+        <div class="project-img">
+          <img src="imagenes/boisdron/ruca.png" alt="Ruca Boisdron 2025 · Fasta" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Identidad Visual Completa · Fasta 2025</p>
+          <p class="project-name">Ruca Boisdron · Identidad 2025</p>
+          <p class="project-desc">Identidad visual completa para Ruca Boisdron y piezas para Instagram, reflejando el lema 2025 y el espíritu joven del movimiento.</p>
+        </div>
+      </div>
+
+      <!-- PROYECTO 13 — Fasta · Peregrinación y Consagración -->
+      <div class="project-card reveal" onclick="openProjectModal('peregrinacion')">
+        <div class="project-img">
+          <img src="imagenes/peregrinacion/peregrinacion.png" alt="Peregrinación y Consagración · Fasta" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Identidad Visual · Fasta</p>
+          <p class="project-name">Peregrinación y Consagración a María</p>
+          <p class="project-desc">Identidad visual para una peregrinación y consagración a la Virgen María del movimiento Fasta.</p>
+        </div>
+      </div>
+
+      <!-- PROYECTO — Calendario Creativo -->
+      <div class="project-card reveal" onclick="openProjectModal('calendario')">
+        <div class="project-img">
+          <img src="imagenes/calendario/calendario.png" alt="Calendario Creativo" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Calendario Creativo</p>
+          <p class="project-name">Diseño de calendario creativo</p>
+          <p class="project-desc">Diseño de calendario anual con fechas importantes para uso personal.</p>
+        </div>
+      </div>
+
+      <!-- PROYECTO — Ruca 2024 -->
+      <div class="project-card reveal" onclick="openProjectModal('ruca2024')">
+        <div class="project-img">
+          <img src="imagenes/ruca/sabado.png" alt="Ruca Boisdron 2024 · Fasta" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Identidad Visual · Fasta 2024</p>
+          <p class="project-name">Diseño de historias</p>
+          <p class="project-desc">Identidad visual reflejada en historias para Ruca Boisdron 2024.</p>
+        </div>
+      </div>
+
+      <!-- PROYECTO — Starbucks -->
+      <div class="project-card reveal" onclick="openProjectModal('starbucks')">
+        <div class="project-img">
+          <img src="imagenes/starbucks/starbucks.png" alt="Campaña Starbucks · UP" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Campaña Starbucks · UP</p>
+          <p class="project-name">Campaña de lanzamiento nuevo producto Starbucks</p>
+          <p class="project-desc">Campaña de lanzamiento y creación de nuevo producto para Starbucks. Proyecto académico, no oficial.</p>
+        </div>
+      </div>
+
+
+      <!-- PROYECTO — Agenda personalizada y creativa -->
+      <div class="project-card reveal" onclick="openProjectModal('agenda')">
+        <div class="project-img">
+          <img src="imagenes/agenda/agenda.png" alt="Agenda personalizada y creativa" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Diseño Editorial · Proyecto Académico</p>
+          <p class="project-name">Agenda personalizada y creativa</p>
+          <p class="project-desc">Diseño académico de agenda personalizada y creativa, con composiciones originales y desarrollo visual integral.</p>
+        </div>
+      </div>
+      <!-- PROYECTO — Locro patrio -->
+      <div class="project-card reveal" onclick="openProjectModal('locro')">
+        <div class="project-img">
+          <img src="imagenes/locro/locro.png" alt="Locro patrio · Fasta Movimiento" style="width:100%;height:100%;object-fit:cover;">
+          <div class="project-overlay">
+            <span class="overlay-btn">Ver proyecto</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <p class="project-cat">Fasta Movimiento · Diseño de historias</p>
+          <p class="project-name">Locro patrio</p>
+          <p class="project-desc">Diseño de historias para Locro patrio de Fasta Movimiento, con composición propia y piezas pensadas para comunicación en redes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROYECTOS DESTACADOS
+  ============================================================ -->
+
+  <!-- DESTACADO 1 — Medialunas Calentitas -->
+  <section class="featured" onclick="openProjectModal('medialunas')" style="cursor:pointer;">
+    <div class="featured-visual" style="padding:0; overflow:hidden;">
+      <img src="imagenes/medialunas/ml1.png" alt="Medialunas Calentitas"
+           style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div class="featured-content reveal">
+      <span class="featured-badge">Proyecto destacado · 2º Premio UP 2025</span>
+      <h3 class="featured-title">Medialunas Calentitas · Rediseño de marca</h3>
+      <p class="featured-desc">
+        Propuesta académica de rediseño integral: nuevo manual de marca completo
+        y prototipo del sitio web en Figma, tanto en versión desktop como mobile.
+        Premiado por la Universidad de Palermo en Proyectos Pedagógicos Digitales.
+      </p>
+      <span class="btn-primary" style="width:fit-content;">Ver proyecto</span>
+    </div>
+  </section>
+
+  <!-- DESTACADO 2 — Folkmore Department -->
+  <section class="featured" onclick="openProjectModal('folkmore')" style="cursor:pointer; direction:rtl;">
+    <div class="featured-visual" style="padding:0; overflow:hidden; direction:ltr;">
+      <img src="imagenes/folkmore/folkmore.png" alt="Folkmore Department"
+           style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div class="featured-content reveal" style="direction:ltr;">
+      <span class="featured-badge">Proyecto destacado · 2º Premio UP 2024</span>
+      <h3 class="featured-title">Folkmore Department · Sitio web</h3>
+      <p class="featured-desc">
+        Sitio web dedicado al análisis profundo de Folklore, Evermore y
+        The Tortured Poets Department de Taylor Swift. Fusión creativa de los
+        tres álbumes en una comunidad de exploración literaria y musical.
+        Premiado por la Universidad de Palermo en Proyectos Pedagógicos Digitales.
+      </p>
+      <span class="btn-primary" style="width:fit-content;">Ver proyecto</span>
+    </div>
+  </section>
+
+  <!-- DESTACADO 3 — Café Pistacho -->
+  <section class="featured" onclick="openProjectModal('pistacho')" style="cursor:pointer;">
+    <div class="featured-visual" style="padding:0; overflow:hidden;">
+      <img src="imagenes/pistacho/pistacho1.png" alt="Café Pistacho"
+           style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div class="featured-content reveal">
+      <span class="featured-badge">Proyecto destacado</span>
+      <h3 class="featured-title">Café Pistacho · Identidad visual</h3>
+      <p class="featured-desc">
+        Diseño de identidad visual completa para un café ficticio.
+        Composiciones propias que integran recursos vectoriales para construir
+        una estética cálida, moderna y distintiva.
+      </p>
+      <span class="btn-primary" style="width:fit-content;">Ver proyecto</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SERVICIOS
+       Para agregar servicios: copiá un .service-card y editalo.
+  ============================================================ -->
+  <section class="services" id="servicios">
+
+    <span class="section-label">Servicios</span>
+    <h2 class="section-title">¿En qué puedo ayudarte?</h2>
+    <div class="divider"></div>
+
+    <div class="services-grid">
+
+      <!-- SERVICIO 1 -->
+      <div class="service-card reveal">
+        <div class="service-icon">✿</div>
+        <p class="service-name">Branding & Identidad</p>
+        <p class="service-desc">
+          Diseño de logos, sistemas de identidad visual, paletas, tipografías
+          y manuales de marca para emprendimientos y marcas personales.
+        </p>
+      </div>
+
+      <!-- SERVICIO 2 -->
+      <div class="service-card reveal">
+        <div class="service-icon">❀</div>
+        <p class="service-name">Diseño Digital</p>
+        <p class="service-desc">
+          Piezas para redes sociales, banners, presentaciones, newsletters
+          y cualquier soporte de comunicación digital.
+        </p>
+      </div>
+
+      <!-- SERVICIO 3 -->
+      <div class="service-card reveal">
+        <div class="service-icon">❁</div>
+        <p class="service-name">Sitios Web</p>
+        <p class="service-desc">
+          Diseño y desarrollo de sitios web simples, portfolios y landing pages
+          con foco en estética, usabilidad y responsive design.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       CONTACTO
+       Editá: texto, links de redes sociales
+       Para conectar el formulario: ver comentario en el JS
+  ============================================================ -->
+  <section class="contact" id="contacto">
+
+    <span class="section-label">Contacto</span>
+    <h2 class="section-title">Trabajemos juntos</h2>
+    <div class="divider"></div>
+
+    <div class="contact-grid">
+
+      <div class="contact-info reveal">
+        <p>
+          Si tenés un proyecto en mente o querés saber más sobre mi trabajo,
+          mandame un mensaje. Respondo en 24–48 horas.
+        </p>
+
+        <!-- REDES SOCIALES — cambiá los href por tus links reales -->
+     <div class="social-links">
+  <a href="https://www.instagram.com/portfolio.martinezriera/" class="social-link" target="_blank" rel="noopener">Instagram de portfolio universitario</a>
+  <a href="https://www.instagram.com/sofimriera/" class="social-link" target="_blank" rel="noopener">Instagram personal</a>
+  <span class="social-link">sofia.martinez.riera@gmail.com</span>
+</div>
+</div>
+
+      <div class="reveal">
+        <form class="contact-form" id="contactForm" novalidate>
+
+          <div class="form-field">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required />
+          </div>
+
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="hola@ejemplo.com" required />
+          </div>
+
+          <div class="form-field">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" placeholder="Contame sobre tu proyecto..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn-accent">Enviar mensaje</button>
+
+          <div class="form-success" id="formSuccess">
+            ¡Mensaje enviado! Te respondo pronto.
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER — cambiá tu nombre y frase
+  ============================================================ -->
+  <footer class="footer">
+    <span>© 2026 Sofía Martínez Riera · Diseño & Comunicación Digital</span>
+    <span class="footer-accent">Vivimos creando.</span>
+  </footer>
+
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+    /* ── NAV: sombra al hacer scroll ───────────────────────── */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+
+    /* ── MENÚ HAMBURGUESA (mobile) ─────────────────────────── */
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+
+    /* ── SCROLL REVEAL ─────────────────────────────────────── */
+    const revealEls = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, i * 80);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // Hero visible de inmediato
+    document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('visible'));
+
+
+    /* ── FORMULARIO DE CONTACTO ────────────────────────────── */
+    const form        = document.getElementById('contactForm');
+    const formSuccess = document.getElementById('formSuccess');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const nombre  = document.getElementById('nombre').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const mensaje = document.getElementById('mensaje').value.trim();
+
+      if (!nombre || !email || !mensaje) return;
+
+      /*
+        CONECTAR CON SERVICIO REAL DE FORMULARIOS:
+
+        Opción A — Formspree (recomendado, gratis):
+          1. Creá cuenta en formspree.io
+          2. Creá un formulario y copiá tu ID (ej: "xpzgkwld")
+          3. Reemplazá el setTimeout de abajo por:
+
+          fetch('https://formspree.io/f/TU-ID', {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: new FormData(form)
+          }).then(r => {
+            if (r.ok) { form.reset(); formSuccess.style.display = 'block'; }
+          });
+
+        Opción B — Netlify Forms:
+          Agregá data-netlify="true" al tag <form> y desplegá en Netlify.
+
+        Opción C — EmailJS:
+          emailjs.sendForm('service_id', 'template_id', form)
+      */
+
+      const btn = form.querySelector('button[type="submit"]');
+      btn.textContent = 'Enviando...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        form.reset();
+        formSuccess.style.display = 'block';
+        btn.textContent = 'Enviar mensaje';
+        btn.disabled = false;
+      }, 800);
+    });
+
+  </script>
+
+  <!-- ============================================================
+       MODAL DE PROYECTO — Short n' Sweet
+  ============================================================ -->
+  <div class="project-modal-overlay" id="projectModalOverlay" onclick="handleModalOverlayClick(event)">
+    <div class="project-modal" id="projectModal">
+      <button class="modal-close" onclick="closeProjectModal()" aria-label="Cerrar">✕</button>
+
+      <div class="modal-slider">
+        <div class="slider-track" id="sliderTrack"></div>
+        <button class="slider-btn prev" onclick="slideMove(-1)">&#8592;</button>
+        <button class="slider-btn next" onclick="slideMove(1)">&#8594;</button>
+        <div class="slider-dots" id="sliderDots"></div>
+        <span class="slider-counter" id="sliderCounter"></span>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-cat" id="modalCat"></p>
+        <h3 class="modal-title" id="modalTitle"></h3>
+        <div id="modalProtosContainer" style="flex-wrap:wrap; gap:0.6rem; margin-bottom:1.2rem; display:none;"></div>
+        <p class="modal-description" id="modalDesc"></p>
+        <p class="modal-rights" id="modalRights"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ── DATOS DE PROYECTOS ──────────────────────────────────── */
+    const projects = {
+     ruca2024: {
+        cat: 'Identidad Visual · Fasta 2024',
+        title: 'Ruca Boisdron 2024 · Fasta',
+        description: 'Diseño de historias',
+        rights: '⚠ Queda prohibida la reproducción total o parcial de este proyecto. Las composiciones son de autoría propia; las ilustraciones utilizadas en este proyecto reservan sus derechos a quienes las ilustraron.',
+        images: [
+          'imagenes/ruca/sabado1.png',
+          'imagenes/ruca/sabado2.png',
+          'imagenes/ruca/sabado3.png',
+          'imagenes/ruca/sabado4.png',
+          'imagenes/ruca/sabado5.png',
+          'imagenes/ruca/sabado6.png',
+          'imagenes/ruca/sabado7.png',
+          'imagenes/ruca/sabado8.png',
+          'imagenes/ruca/sabado9.png',
+          'imagenes/ruca/sabado10.png',
+          'imagenes/ruca/sabado11.png',
+          'imagenes/ruca/sabado12.png',
+          'imagenes/ruca/sabado13.png',
+          'imagenes/ruca/sabado14.png',
+          'imagenes/ruca/sabado15.png',
+          'imagenes/ruca/sabado16.png',
+          'imagenes/ruca/sabado17.png',
+          'imagenes/ruca/sabado18.png',
+          'imagenes/ruca/sabado19.png',
+          'imagenes/ruca/sabado20.png',
+          'imagenes/ruca/sabado21.png',
+          'imagenes/ruca/sabado22.png',
+          'imagenes/ruca/sabado23.png',
+          'imagenes/ruca/sabado24.png',
+          'imagenes/ruca/sabado25.png',
+          'imagenes/ruca/sabado26.png',
+          'imagenes/ruca/sabado27.png',
+          'imagenes/ruca/sabado28.png',
+        
+        ]
+      }, 
+      
+      calendario: {
+        cat: 'Calendario creativo',
+        title: 'Diseño de calendario creativo',
+        description: 'Diseño de calendario anual con fechas importantes para uso personal',
+        rights: '⚠ Queda prohibida la reproducción total o parcial de este proyecto. Las composiciones son de autoría propia; las ilustraciones utilizadas en este proyecto reservan sus derechos a quienes las ilustraron.',
+        images: [
+          'imagenes/calendario/calendario1.png',
+          'imagenes/calendario/calendario2.png',
+          'imagenes/calendario/calendario3.png',
+          'imagenes/calendario/calendario4.png',
+          'imagenes/calendario/calendario5.png',
+          'imagenes/calendario/calendario6.png',
+          'imagenes/calendario/calendario7.png',
+          'imagenes/calendario/calendario8.png',
+          'imagenes/calendario/calendario9.png',
+          'imagenes/calendario/calendario10.png',
+          'imagenes/calendario/calendario11.png',
+          'imagenes/calendario/calendario12.png',
+          
+        ]
+      },
+    
+      
+      starbucks: {
+        cat: 'Campaña Starbucks · UP',
+        title: 'Campaña Starbucks · UP',
+        description: 'Proyecto académico: campaña de lanzamiento de un nuevo producto ficticio para Starbucks.',
+        rights: '⚠ Queda prohibida la reproducción total o parcial de este proyecto. Las composiciones son de autoría propia; las ilustraciones utilizadas en este proyecto reservan sus derechos a quienes las ilustraron.',
+        images: [
+          'imagenes/starbucks/starbucks.png',
+          'imagenes/starbucks/starbucks1.png',
+          'imagenes/starbucks/starbucks2.png',
+          'imagenes/starbucks/starbucks3.png',
+          'imagenes/starbucks/starbucks4.png',
+          'imagenes/starbucks/starbucks5.png',
+          'imagenes/starbucks/starbucks6.png',
+          'imagenes/starbucks/starbucks7.png',
+          'imagenes/starbucks/starbucks8.png'
+        ]
+      },
+
+      agenda: {
+        cat: 'Diseño Editorial · Proyecto Académico',
+        title: 'Agenda personalizada y creativa',
+        description: 'Proyecto académico de diseño de agenda personalizada y creativa. Las composiciones son de autoría propia. Queda prohibida la reproducción total o parcial de este proyecto; los vectores utilizados reservan sus derechos a quienes los diseñaron.',
+        rights: '⚠ Queda prohibida la reproducción total o parcial de este proyecto. Las composiciones son de autoría propia; los vectores utilizados reservan sus derechos a quienes los diseñaron.',
+        images: [
+          'imagenes/agenda/agenda.png',
+          'imagenes/agenda/agenda1.png',
+          'imagenes/agenda/agenda2.png',
+          'imagenes/agenda/agenda3.png',
+          'imagenes/agenda/agenda4.png',
+          'imagenes/agenda/agenda5.png',
+          'imagenes/agenda/agenda6.png',
+          'imagenes/agenda/agenda7.png',
+          'imagenes/agenda/agenda8.png',
+          'imagenes/agenda/agenda9.png',
+          'imagenes/agenda/agenda10.png',
+          'imagenes/agenda/agenda11.png',
+          'imagenes/agenda/agenda12.png',
+          'imagenes/agenda/agenda13.png',
+          'imagenes/agenda/agenda14.png',
+          'imagenes/agenda/agenda15.png',
+          'imagenes/agenda/agenda16.png',
+          'imagenes/agenda/agenda17.png',
+          'imagenes/agenda/agenda18.png',
+          'imagenes/agenda/agenda19.png',
+          'imagenes/agenda/agenda20.png',
+          'imagenes/agenda/agenda21.png',
+          'imagenes/agenda/agenda22.png',
+          'imagenes/agenda/agenda23.png',
+          'imagenes/agenda/agenda24.png',
+          'imagenes/agenda/agenda25.png',
+          'imagenes/agenda/agenda26.png',
+          'imagenes/agenda/agenda27.png',
+          'imagenes/agenda/agenda28.png',
+          'imagenes/agenda/agenda29.png',
+          'imagenes/agenda/agenda30.png'
+        ]
+      },
+
+      locro: {
+        cat: 'Fasta Movimiento · Diseño de historias',
+        title: 'Locro patrio',
+        description: 'Diseño de historias para Locro patrio de Fasta Movimiento. La composición es de autoría propia; las ilustraciones utilizadas reservan sus derechos a quienes las ilustraron.',
+        rights: '⚠ Queda prohibida la reproducción total o parcial de este proyecto. La composición es de autoría propia; las ilustraciones utilizadas reservan sus derechos a quienes las ilustraron.',
+        images: [
+          'imagenes/locro/locro.png',
+          'imagenes/locro/locro1.png',
+          'imagenes/locro/locro2.png'
+        ]
+      },
+
+      peregrinacion: {
+        cat: 'Identidad Visual · Fasta',
+        title: 'Peregrinación y Consagración a la Virgen María',
+        description: 'Diseño de identidad visual para una peregrinación y consagración a la Virgen María organizada por el movimiento Fasta. El proyecto acompaña visualmente un momento de profundo significado espiritual para los jóvenes, con un diseño pensado para transmitir devoción, comunidad y pertenencia.',
+        rights: '© Las ilustraciones utilizadas en este proyecto reservan sus derechos a quienes las ilustraron.',
+        images: [
+          'imagenes/peregrinacion/p1.png',
+          'imagenes/peregrinacion/p2.png',
+          'imagenes/peregrinacion/p3.png',
+          'imagenes/peregrinacion/p4.png',
+          'imagenes/peregrinacion/p5.png',
+          'imagenes/peregrinacion/p6.png',
+          'imagenes/peregrinacion/p7.png',
+          'imagenes/peregrinacion/p8.png',
+          'imagenes/peregrinacion/p9.png',
+          'imagenes/peregrinacion/p10.png',
+          'imagenes/peregrinacion/p11.png',
+          'imagenes/peregrinacion/p12.png',
+          'imagenes/peregrinacion/p13.png',
+          'imagenes/peregrinacion/p14.png',
+          'imagenes/peregrinacion/p15.png',
+          'imagenes/peregrinacion/p16.png'
+        ]
+      },
+      boisdron: {
+        cat: 'Identidad Visual · Fasta',
+        title: 'Ruca Boisdron · Identidad visual 2025',
+        description: 'Diseño de identidad visual completa para Ruca Boisdron, una de las "rucas" (casas) del movimiento Fasta. El proyecto abarca la identidad visual de la ruca y el diseño de piezas para Instagram, pensadas para reflejar el lema del año 2025: "Alégrense siempre en el Señor", mostrando con autenticidad la presencia y el espíritu de la juventud que la integra. Las composiciones son de autoría propia.',
+        rights: '⚠ Queda prohibida la reproducción total o parcial de este proyecto. Las composiciones son de autoría propia; las ilustraciones utilizadas reservan sus derechos a quienes las diseñaron.',
+        images: [
+          'imagenes/boisdron/ruca.png',
+          'imagenes/boisdron/ruca1.png',
+          'imagenes/boisdron/ruca2.png',
+          'imagenes/boisdron/ruca3.png',
+          'imagenes/boisdron/ruca4.png',
+          'imagenes/boisdron/ruca5.png',
+          'imagenes/boisdron/ruca6.png',
+          'imagenes/boisdron/ruca7.png',
+          'imagenes/boisdron/ruca8.png',
+          'imagenes/boisdron/ruca9.png',
+          'imagenes/boisdron/ruca10.png',
+          'imagenes/boisdron/ruca11.png'
+        ]
+      },
+      heredario: {
+        cat: 'Diseño Editorial · Fasta',
+        title: 'Heredario · Librito para campamento regional de Herederas',
+        description: 'Diseño de un librito interactivo para el campamento regional de jovencitas adolescentes del movimiento Fasta, cuyo grupo lleva el nombre de "Herederas". El material funcionó como soporte para las charlas formativas y los espacios espirituales del día, acompañando cada momento del campamento con diseño cuidado e intencional. Al final del librito se incluye un devocionario con oraciones seleccionadas minuciosamente, al igual que cada decisión de diseño. Las composiciones son de autoría propia.',
+        rights: '⚠ Queda prohibida la reproducción total o parcial de este proyecto. Las composiciones son de autoría propia; las ilustraciones utilizadas reservan sus derechos a quienes las diseñaron.',
+        images: [
+          'imagenes/heredario/heredario1.png',
+          'imagenes/heredario/heredario2.png',
+          'imagenes/heredario/heredario3.png',
+          'imagenes/heredario/heredario4.png',
+          'imagenes/heredario/heredario5.png',
+          'imagenes/heredario/heredario6.png',
+          'imagenes/heredario/heredario7.png',
+          'imagenes/heredario/heredario8.png',
+          'imagenes/heredario/heredario9.png',
+          'imagenes/heredario/heredario10.png',
+          'imagenes/heredario/heredario11.png',
+          'imagenes/heredario/heredario12.png',
+          'imagenes/heredario/heredario13.png',
+          'imagenes/heredario/heredario14.png',
+          'imagenes/heredario/heredario15.png'
+        ]
+      },
+      amistad: {
+        cat: 'Diseño Editorial · Fasta',
+        title: 'Fasta · Libritos de insumos para actividad jurisdiccional',
+        description: 'Diseño de un librito de insumos para una actividad jurisdiccional de jóvenes adolescentes organizada por Fasta. El proyecto contempló 5 versiones del mismo librito, donde el contenido de cada una correspondía a la virtud que le tocaba representar a cada grupo de jóvenes en una obra teatral. Las composiciones son de autoría propia.',
+        rights: '⚠ Queda prohibida la reproducción total o parcial de este proyecto. Las composiciones son de autoría propia; las ilustraciones utilizadas reservan sus derechos a quienes las diseñaron.',
+        images: [
+          'imagenes/amistad/1.png',
+          'imagenes/amistad/2.png',
+          'imagenes/amistad/3.png',
+          'imagenes/amistad/4.png',
+          'imagenes/amistad/5.png',
+          'imagenes/amistad/6.png',
+          'imagenes/amistad/7.png',
+          'imagenes/amistad/8.png',
+          'imagenes/amistad/9.png',
+          'imagenes/amistad/10.png',
+          'imagenes/amistad/11.png',
+          'imagenes/amistad/12.png',
+          'imagenes/amistad/13.png',
+          'imagenes/amistad/14.png'
+        ]
+      },
+      pistacho: {
+        cat: 'Branding · Identidad Visual',
+        title: 'Café Pistacho · Diseño de identidad para café ficticio',
+        description: 'Proyecto académico de diseño de identidad visual completa para un café ficticio llamado Pistacho. La propuesta abarca el desarrollo de una marca cohesiva, con composiciones propias que integran recursos vectoriales de terceros para construir una estética cálida, moderna y distintiva.',
+        rights: '⚠ Queda prohibida la reproducción total o parcial de este proyecto. Las composiciones son de autoría propia; los vectores utilizados reservan sus derechos a quienes los diseñaron.',
+        images: [
+          'imagenes/pistacho/pistacho1.png',
+          'imagenes/pistacho/pistacho2.png',
+          'imagenes/pistacho/pistacho3.png',
+          'imagenes/pistacho/pistacho4.png',
+          'imagenes/pistacho/pistacho5.png',
+          'imagenes/pistacho/pistacho6.png',
+          'imagenes/pistacho/pistacho7.png',
+          'imagenes/pistacho/pistacho8.png',
+          'imagenes/pistacho/pistacho9.png',
+          'imagenes/pistacho/pistacho10.png',
+          'imagenes/pistacho/pistacho11.png',
+          'imagenes/pistacho/pistacho12.png',
+          'imagenes/pistacho/pistacho13.png',
+          'imagenes/pistacho/pistacho14.png',
+          'imagenes/pistacho/pistacho15.png'
+        ]
+      },
+      westwood: {
+        cat: 'Campaña · Diseño No Oficial',
+        title: 'Vivienne Westwood · Campaña de lanzamiento de temporada',
+        description: 'Proyecto académico de diseño de campaña de lanzamiento creativa y expresiva de temporada para Vivienne Westwood. La propuesta explora la identidad estética de la marca —su carácter rebelde, romántico y subversivo— traducida en una campaña visual coherente y emocionalmente potente. Este trabajo es de carácter estrictamente educativo y no representa una producción oficial ni tiene vínculo con la marca.',
+        rights: '⚠ Proyecto académico no oficial, realizado con fines educativos. Queda prohibida la reproducción total o parcial de este proyecto. Todos los elementos visuales y la marca son propiedad de sus respectivos dueños.',
+        images: [
+          'imagenes/westwood/westwood.png',
+          'imagenes/westwood/westwood1.png',
+          'imagenes/westwood/westwood2.png',
+          'imagenes/westwood/westwood3.png',
+          'imagenes/westwood/westwood4.png',
+          'imagenes/westwood/westwood5.png',
+          'imagenes/westwood/westwood6.png',
+          'imagenes/westwood/westwood7.png',
+          'imagenes/westwood/westwood8.png',
+          'imagenes/westwood/westwood9.png',
+          'imagenes/westwood/westwood10.png',
+          'imagenes/westwood/westwood11.png',
+          'imagenes/westwood/westwood12.png',
+          'imagenes/westwood/westwood13.png',
+          'imagenes/westwood/westwood14.png',
+          'imagenes/westwood/westwood15.png',
+          'imagenes/westwood/westwood16.png',
+          'imagenes/westwood/westwood17.png',
+          'imagenes/westwood/westwood18.png',
+          'imagenes/westwood/westwood19.png',
+          'imagenes/westwood/westwood20.png'
+        ]
+      },
+      cheetos: {
+        cat: 'Packaging · Rediseño No Oficial',
+        title: 'Cheetos × Hora de Aventura · Diseño de packaging',
+        description: 'Proyecto académico de diseño de packaging para la marca Cheetos en colaboración con el universo de Hora de Aventura. La propuesta integra la identidad visual de ambas marcas en un sistema de packaging coherente, lúdico y atractivo para el público objetivo. Este trabajo es de carácter estrictamente educativo y no representa una producción oficial ni tiene vínculo con ninguna de las marcas involucradas.',
+        rights: '⚠ Proyecto académico no oficial, realizado con fines educativos. Queda prohibida la reproducción total o parcial de este proyecto. Todos los elementos visuales, personajes y marcas son propiedad de sus respectivos dueños.',
+        images: [
+          'imagenes/cheetos/cheetos.png',
+          'imagenes/cheetos/cheetos1.png',
+          'imagenes/cheetos/cheetos2.png',
+          'imagenes/cheetos/cheetos3.png',
+          'imagenes/cheetos/cheetos4.png',
+          'imagenes/cheetos/cheetos5.png',
+          'imagenes/cheetos/cheetos6.png',
+          'imagenes/cheetos/cheetos7.png',
+          'imagenes/cheetos/cheetos8.png',
+          'imagenes/cheetos/cheetos9.png',
+          'imagenes/cheetos/cheetos10.png',
+          'imagenes/cheetos/cheetos11.png',
+          'imagenes/cheetos/cheetos12.png',
+          'imagenes/cheetos/cheetos13.png',
+          'imagenes/cheetos/cheetos14.png',
+          'imagenes/cheetos/cheetos15.png'
+        ]
+      },
+      booking: {
+        cat: 'UX/UI · Rediseño No Oficial',
+        title: 'Booking · Rediseño de app mobile',
+        description: 'Proyecto académico grupal realizado junto a otros cuatro compañeros de clase. Se llevó a cabo un análisis exhaustivo de la empresa, el funcionamiento actual de la aplicación mobile y las opiniones de los usuarios a través de entrevistas en profundidad. A partir de ese relevamiento, se diseñó el prototipo en Figma y se lo testeó múltiples veces con usuarios reales hasta alcanzar el prototipo final. Este trabajo es de carácter estrictamente educativo y no representa una producción oficial ni tiene vínculo con la empresa.',
+        rights: '⚠ Proyecto académico no oficial, realizado con fines educativos. Queda prohibida la reproducción total o parcial de este proyecto. Todos los elementos visuales y contenidos son propiedad de sus respectivos dueños.',
+        prototipos: [
+          {
+            label: 'PROTOTIPO BOOKING — FIGMA',
+            url: 'https://www.figma.com/proto/ln6U7xohDm7etdWg0iaz1f/WIREFREMES-BOOKING?page-id=441%3A1582&node-id=441-1584&p=f&viewport=184%2C-547%2C0.15&t=J81jipxdiQ3CbNbr-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=441%3A1610'
+          }
+        ],
+        images: [
+          'imagenes/booking/booking1.png',
+          'imagenes/booking/booking2.png',
+          'imagenes/booking/booking3.png'
+        ]
+      },
+      medialunas: {
+        cat: 'Branding · Rediseño No Oficial',
+        title: 'Medialunas Calentitas · Rediseño de marca y web',
+        description: 'Propuesta académica de rediseño integral de la marca Medialunas Calentitas. El proyecto incluye un nuevo manual de marca completo seguido del rediseño del sitio web, desarrollado como prototipo en Figma tanto en versión desktop como mobile. Este trabajo es de carácter estrictamente educativo y no representa una producción oficial ni tiene vínculo con la marca.',
+        rights: '⚠ Proyecto académico no oficial. Queda prohibida la reproducción total o parcial de este proyecto. Todos los elementos visuales, diseños y contenidos son propiedad de sus respectivos dueños.',
+        prototipos: [
+          {
+            label: 'PROTOTIPO MC WEB — FIGMA',
+            url: 'https://www.figma.com/proto/oTa2jpZIqb14UrwEJp2rDd/Untitled?page-id=0%3A1&node-id=89-2745&p=f&viewport=167%2C159%2C0.21&t=zier9C1zNps2Ij3j-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=133%3A3464'
+          },
+          {
+            label: 'PROTOTIPO MC MOBILE — FIGMA',
+            url: 'https://www.figma.com/proto/oTa2jpZIqb14UrwEJp2rDd/Untitled?page-id=57%3A181&node-id=57-219&t=ImnCay8u34hVH4s6-1'
+          }
+        ],
+        images: [
+          'imagenes/medialunas/ml1.png',
+          'imagenes/medialunas/ml2.png',
+          'imagenes/medialunas/ml3.png',
+          'imagenes/medialunas/ml4.png',
+          'imagenes/medialunas/ml5.png',
+          'imagenes/medialunas/ml6.png',
+          'imagenes/medialunas/ml7.png',
+          'imagenes/medialunas/ml8.png',
+          'imagenes/medialunas/ml9.png',
+          'imagenes/medialunas/ml10.png',
+          'imagenes/medialunas/ml11.png',
+          'imagenes/medialunas/ml12.png',
+          'imagenes/medialunas/ml13.png',
+          'imagenes/medialunas/ml14.png',
+          'imagenes/medialunas/ml15.png',
+          'imagenes/medialunas/ml16.png',
+          'imagenes/medialunas/ml17.png',
+          'imagenes/medialunas/ml18.png',
+          'imagenes/medialunas/ml19.png',
+          'imagenes/medialunas/ml20.png',
+          'imagenes/medialunas/ml21.png',
+          'imagenes/medialunas/ml22.png',
+          'imagenes/medialunas/ml23.png',
+          'imagenes/medialunas/ml24.png',
+          'imagenes/medialunas/ml25.png',
+          'imagenes/medialunas/ml26.png'
+        ]
+      },
+      vertigo: {
+        cat: 'Diseño Web · HTML / CSS / PHP',
+        title: 'Vértigo Cromático · Sitio web sobre el expresionismo',
+        description: 'Vértigo Cromático es un sitio web creado para acercarte al expresionismo y todo lo que este movimiento artístico tiene para ofrecer. Aquí podés descubrir la historia de sus artistas, el significado de sus obras y la fuerza emocional que las atraviesa. El propósito es que cada visitante pueda conectar con el arte de manera auténtica, comprendiendo cómo los colores, las formas y los trazos expresan sentimientos y experiencias humanas profundas. Un espacio de exploración, aprendizaje y admiración, donde el expresionismo deja de ser solo una corriente artística y se convierte en una experiencia que inspira y emociona. Desarrollado con HTML, CSS y PHP. Proyecto académico.',
+        rights: '© Todas las imágenes, diseños y contenidos visuales quedan reservados a sus respectivos dueños.',
+        prototipo: 'https://sosomriera.github.io/vertigo_cromatico_/',
+        prototipoLabel: 'SITIO WEB EN HTML, CSS & PHP — VÉRTIGO CROMÁTICO',
+        images: [
+          'imagenes/vertigo/vertigo.png',
+          'imagenes/vertigo/cromatico.png'
+        ]
+      },
+      rincon: {
+        cat: 'Diseño Web · UX/UI',
+        title: 'El Rincón de las Letras · Sitio web para amantes de la lectura',
+        description: 'El Rincón de las Letras es un sitio web dedicado al amor por la lectura. Nace como un espacio cálido e íntimo para lectores que encuentran en los libros refugio, inspiración y compañía. Aquí se comparten recomendaciones, clásicos inolvidables, librerías con encanto y reflexiones sobre esas historias que nos transforman. Inspirado en la sensibilidad de La tienda en la esquina de Tienes un e-mail, busca ser una comunidad para quienes creen que leer también es una forma de viajar, sentir y encontrarse. Proyecto académico.',
+        rights: '© Todas las imágenes, diseños y contenidos visuales quedan reservados a sus respectivos dueños.',
+        prototipo: 'https://sosomriera.github.io/El_Rincon_de_las_letras/index.html',
+        prototipoLabel: 'SITIO WEB EN HTML & CSS — EL RINCÓN DE LAS LETRAS',
+        images: [
+          'imagenes/el_rincon/rincon.png',
+          'imagenes/el_rincon/inspiracion.png',
+          'imagenes/el_rincon/publico.png',
+          'imagenes/el_rincon/mapasitio.png',
+          'imagenes/el_rincon/diseno.png',
+          'imagenes/el_rincon/mockups.png'
+        ]
+      },
+      folkmore: {
+        cat: 'Diseño Web · UX/UI',
+        title: 'Folkmore Department · Sitio web de análisis musical',
+        description: 'Folklore Department es un sitio web diseñado y dedicado exclusivamente a analizar y explorar en profundidad los tres álbumes de Taylor Swift: Folklore, Evermore y The Tortured Poets Department. El nombre del sitio es una fusión creativa de los títulos de los tres álbumes; al agregar "Department" al final surge un doble sentido, creando la sensación de comunidad y de un espacio dedicado a la investigación y el estudio profundo de estos trabajos discográficos. La inclusión de "The Tortured Poets Department" en el concepto refuerza la idea de un lugar donde se analizan las letras y las historias detrás de las canciones, conectándolas con la poesía y la literatura. Proyecto académico.',
+        rights: '© Todas las imágenes, diseños y contenidos visuales quedan reservados a sus respectivos dueños.',
+        prototipo: 'https://www.figma.com/proto/Nf1Wk4ubPmsH387RSHABwK/Untitled?page-id=0%3A1&node-id=2-2&p=f&viewport=197%2C160%2C0.13&t=M7TP7yQdQrGGbA28-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=2%3A2&show-proto-sidebar=1',
+        prototipoLabel: 'PROTOTIPO EN FIGMA — FOLKMORE DEPARTMENT',
+        images: [
+          'imagenes/folkmore/folkmore.png',
+          'imagenes/folkmore/mapa.png',
+          'imagenes/folkmore/tipografias.png'
+        ]
+      },
+      shortnsweet: {
+        cat: 'Diseño Editorial & Packaging',
+        title: 'Short n\u2019 Sweet \u00b7 Dise\u00f1o de CD y packaging para artista',
+        description: 'Proyecto educativo que incluye el dise\u00f1o completo de un CD y su material gr\u00e1fico: '
+          + 'dise\u00f1o del disco, sobre de CD, caja contenedora para 10 sobres, flyer promocional '
+          + 'y afiche tipogr\u00e1fico. El trabajo explora la identidad visual de la artista, '
+          + 'integrando coherencia est\u00e9tica en todos los formatos, tanto impresos como digitales. '
+          + 'Este proyecto fue realizado con fines educativos y no representa una producci\u00f3n oficial.',
+        rights: '\u00a9 Todas las im\u00e1genes, dise\u00f1os y contenidos visuales quedan reservados a sus respectivos due\u00f1os.',
+        images: [
+          'imagenes/shortnsweet/logo_stns.png',
+          'imagenes/shortnsweet/moodboard.png',
+          'imagenes/shortnsweet/cd.png',
+          'imagenes/shortnsweet/sobre.png',
+          'imagenes/shortnsweet/caja_contenedora.png',
+          'imagenes/shortnsweet/flyer.png',
+          'imagenes/shortnsweet/poster.png'
+        ]
+      }
+    };
+
+    let currentSlide = 0;
+    let totalSlides = 0;
+
+    function openProjectModal(projectKey) {
+      const proj = projects[projectKey];
+      if (!proj) return;
+
+      // Fill text
+      document.getElementById('modalCat').textContent   = proj.cat;
+      document.getElementById('modalTitle').textContent = proj.title;
+      document.getElementById('modalDesc').textContent  = proj.description;
+      document.getElementById('modalRights').textContent = proj.rights;
+
+      // Prototype links (supports single prototipo or array prototipos)
+      const protosContainer = document.getElementById('modalProtosContainer');
+      protosContainer.innerHTML = '';
+
+      const links = proj.prototipos
+        ? proj.prototipos
+        : proj.prototipo
+          ? [{ label: proj.prototipoLabel || 'PROTOTIPO ' + proj.title.split('·')[0].trim().toUpperCase(), url: proj.prototipo }]
+          : [];
+
+      if (links.length > 0) {
+        protosContainer.style.display = 'flex';
+        links.forEach(({ label, url }) => {
+          const a = document.createElement('a');
+          a.className = 'modal-proto';
+          a.href = url;
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.innerHTML = '<span>&#9654;</span> ' + label;
+          protosContainer.appendChild(a);
+        });
+      } else {
+        protosContainer.style.display = 'none';
+      }
+
+      // Build slider
+      const track = document.getElementById('sliderTrack');
+      const dots  = document.getElementById('sliderDots');
+      track.innerHTML = '';
+      dots.innerHTML  = '';
+      totalSlides = proj.images.length;
+
+      proj.images.forEach((src, i) => {
+        const slide = document.createElement('div');
+        slide.className = 'slider-slide';
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = proj.title + ' — imagen ' + (i + 1);
+        slide.appendChild(img);
+        track.appendChild(slide);
+
+        const dot = document.createElement('span');
+        dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+        dot.onclick = () => goToSlide(i);
+        dots.appendChild(dot);
+      });
+
+      currentSlide = 0;
+      updateSlider();
+
+      document.getElementById('projectModalOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProjectModal() {
+      document.getElementById('projectModalOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleModalOverlayClick(e) {
+      if (e.target === document.getElementById('projectModalOverlay')) {
+        closeProjectModal();
+      }
+    }
+
+    function slideMove(dir) {
+      currentSlide = (currentSlide + dir + totalSlides) % totalSlides;
+      updateSlider();
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateSlider();
+    }
+
+    function updateSlider() {
+      document.getElementById('sliderTrack').style.transform = `translateX(-${currentSlide * 100}%)`;
+      document.getElementById('sliderCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+      document.querySelectorAll('.slider-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === currentSlide);
+      });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      const overlay = document.getElementById('projectModalOverlay');
+      if (!overlay.classList.contains('open')) return;
+      if (e.key === 'ArrowLeft')  slideMove(-1);
+      if (e.key === 'ArrowRight') slideMove(1);
+      if (e.key === 'Escape')     closeProjectModal();
+    });
+  </script>
+
+</body>
+</html>
